@@ -52,8 +52,23 @@ func TestParseCpuSet(t *testing.T) {
 }
 
 func TestParseCpuSet_Invalid(t *testing.T) {
-	if _, err := parseCpuSet("not-a-number"); err == nil {
-		t.Error("expected error for non-numeric cpuset, got nil")
+	tests := []struct {
+		name  string
+		input string
+	}{
+		{"non-numeric single", "abc"},
+		{"non-numeric in list", "0,abc,2"},
+		{"non-numeric range bound", "0-x"},
+		{"too many boundaries", "1-2-3"},
+		{"empty component", "0,,2"},
+		{"descending range", "3-1"},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if _, err := parseCpuSet(tt.input); err == nil {
+				t.Errorf("parseCpuSet(%q) = nil error, want error", tt.input)
+			}
+		})
 	}
 }
 

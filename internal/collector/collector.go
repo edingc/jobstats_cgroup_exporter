@@ -15,6 +15,7 @@
 package collector
 
 import (
+	"fmt"
 	"log/slog"
 	"os"
 	"reflect"
@@ -218,35 +219,39 @@ func (e *Exporter) emitMetrics(ch chan<- prometheus.Metric, metrics []CgroupMetr
 	}
 }
 
+// parseCpuSet expands a Linux cpuset string (e.g. "0-3,7,9-10") into the
+// individual CPU IDs it represents. It returns an error for any malformed
+// component rather than silently skipping it.
 func parseCpuSet(cpuset string) ([]string, error) {
-	var cpus []string
-	var start, end int
-	var err error
 	if cpuset == "" {
 		return nil, nil
 	}
-	ranges := strings.Split(cpuset, ",")
-	for _, r := range ranges {
+	var cpus []string
+	for _, r := range strings.Split(cpuset, ",") {
 		boundaries := strings.Split(r, "-")
-		if len(boundaries) == 1 {
-			start, err = strconv.Atoi(boundaries[0])
-			if err != nil {
-				return nil, err
+		var start, end int
+		var err error
+		switch len(boundaries) {
+		case 1:
+			if start, err = strconv.Atoi(boundaries[0]); err != nil {
+				return nil, fmt.Errorf("invalid cpuset %q: %w", r, err)
 			}
 			end = start
-		} else if len(boundaries) == 2 {
-			start, err = strconv.Atoi(boundaries[0])
-			if err != nil {
-				return nil, err
+		case 2:
+			if start, err = strconv.Atoi(boundaries[0]); err != nil {
+				return nil, fmt.Errorf("invalid cpuset range %q: %w", r, err)
 			}
-			end, err = strconv.Atoi(boundaries[1])
-			if err != nil {
-				return nil, err
+			if end, err = strconv.Atoi(boundaries[1]); err != nil {
+				return nil, fmt.Errorf("invalid cpuset range %q: %w", r, err)
 			}
+		default:
+			return nil, fmt.Errorf("invalid cpuset range %q", r)
+		}
+		if end < start {
+			return nil, fmt.Errorf("invalid cpuset range %q: end before start", r)
 		}
 		for e := start; e <= end; e++ {
-			cpu := strconv.Itoa(e)
-			cpus = append(cpus, cpu)
+			cpus = append(cpus, strconv.Itoa(e))
 		}
 	}
 	return cpus, nil
