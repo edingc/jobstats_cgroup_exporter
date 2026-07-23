@@ -112,8 +112,8 @@ func main() {
 	mux.Handle(*metricsPath, metricsHandler)
 
 	landingConfig := web.LandingConfig{
-		Name:        "Jobstats cgroup Exporter",
-		Description: "Prometheus exporter for Slurm job cgroup (v2) resource usage",
+		Name:        "Jobstats cgroup v2 Exporter",
+		Description: "Prometheus Exporter for Slurm job cgroup v2 resource usage",
 		Version:     version.Info(),
 		Links: []web.LandingLinks{
 			{Address: *metricsPath, Text: "Metrics"},
