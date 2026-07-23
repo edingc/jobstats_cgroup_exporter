@@ -1,0 +1,35 @@
+# Binaries
+/jobstats_cgroup_exporter
+/cgroup_exporter
+*.exe
+*.exe~
+*.so
+
+# Build output
+/dist/
+/.build
+/.tarballs
+
+# Test artifacts
+*.test
+*.out
+/coverage.txt
+/fixtures/
+
+# Go workspace
+go.work
+go.work.sum
+
+# Release
+/.release-env
+
+# Editor/IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db

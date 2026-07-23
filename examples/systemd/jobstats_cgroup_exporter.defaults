@@ -1,0 +1,3 @@
+# Command line arguments passed to the exporter.
+# See `jobstats_cgroup_exporter --help` for all options.
+ARGS="--config.paths /system.slice/slurmstepd.scope"

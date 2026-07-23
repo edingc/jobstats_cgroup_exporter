@@ -1,0 +1,11 @@
+# example prometheus scrape configuration
+# run one exporter per compute node and scrape each node's endpoint
+
+scrape_configs:
+  - job_name: jobstats_cgroup_exporter
+    scrape_interval: 60s
+    scrape_timeout: 30s
+    static_configs:
+      - targets:
+          - node01.example.com:9306
+          - node02.example.com:9306

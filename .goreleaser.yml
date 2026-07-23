@@ -1,0 +1,42 @@
+---
+version: 2
+project_name: jobstats_cgroup_exporter
+before:
+  hooks:
+    - go mod download
+env:
+  - CGO_ENABLED=0
+builds:
+  - id: jobstats_cgroup_exporter
+    main: ./cmd/jobstats_cgroup_exporter
+    goos:
+      - linux
+    goarch:
+      - amd64
+      - arm64
+    ldflags:
+      - -s -w
+      - -X github.com/prometheus/common/version.Version={{.Version}}
+      - -X github.com/prometheus/common/version.Revision={{.FullCommit}}
+      - -X github.com/prometheus/common/version.Branch={{.Branch}}
+      - -X github.com/prometheus/common/version.BuildUser=goreleaser
+      - -X github.com/prometheus/common/version.BuildDate={{.Date}}
+archives:
+  - id: archive
+    ids:
+      - jobstats_cgroup_exporter
+    files:
+      - LICENSE
+      - CHANGELOG.md
+    name_template: "jobstats_cgroup_exporter-{{ .Version }}.{{ .Os }}-{{ .Arch }}"
+    wrap_in_directory: true
+checksum:
+  name_template: 'checksums.txt'
+release:
+  prerelease: auto
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - '^docs:'
+      - '^test:'
