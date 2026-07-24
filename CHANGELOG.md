@@ -1,4 +1,4 @@
-## Unreleased
+## v1.0.0 / 2026-07-24
 
 * Restructured the project into a standard Go layout (`cmd/jobstats_cgroup_exporter`
   and `internal/collector`).
@@ -14,9 +14,9 @@
 * Added `cgroup_exporter_collect_error` to the collector's `Describe` output.
 * Switched to CGO-free static builds and added `linux/arm64` release artifacts.
 * Updated to Go 1.25.
-* Added unit tests, a `golangci-lint` configuration, a `Dockerfile`, a `VERSION`
-  file, systemd/Prometheus examples, and GitHub Actions workflows for testing,
-  releases, and Docker image publishing.
+* Added unit tests, a `golangci-lint` configuration, a `VERSION`
+  file, systemd/Prometheus examples, and GitHub Actions workflows for testing and
+  releases.
 
 ## v0.9.0-alpha / 2026-02-09
 

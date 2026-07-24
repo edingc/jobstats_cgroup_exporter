@@ -1,12 +1,12 @@
 [Unit]
-Description=Jobstats cgroup exporter for Slurm
+Description=Jobstats cgroup v2 exporter for Slurm
 Documentation=https://github.com/edingc/jobstats_cgroup_exporter
-After=slurmd.service
+After=network.service
 
 [Service]
-# The exporter reads other users' cgroups and process info, which requires root.
-User=root
-Restart=on-failure
+AmbientCapabilities=CAP_SYS_PTRACE
+Restart=always
+User=prometheus
 EnvironmentFile=/etc/default/jobstats_cgroup_exporter
 ExecStart=/usr/local/bin/jobstats_cgroup_exporter $ARGS
 ExecReload=/bin/kill -HUP $MAINPID

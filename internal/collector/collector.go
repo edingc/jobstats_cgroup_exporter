@@ -1,4 +1,4 @@
-// Copyright 2026 Grand Valley State University
+// Copyright 2026 Cody Eding
 // Copyright 2020 Trey Dockendorf
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -29,10 +29,9 @@ import (
 )
 
 var (
-	CgroupRoot         = kingpin.Flag("path.cgroup.root", "Root path to cgroup fs").Default(defCgroupRoot).String()
-	collectProcMaxExec = kingpin.Flag("collect.proc.max-exec", "Max length of process executable to record").Default("100").Int()
-	ProcRoot           = kingpin.Flag("path.proc.root", "Root path to proc fs").Default(defProcRoot).String()
-	metricLock         = sync.RWMutex{}
+	CgroupRoot = kingpin.Flag("path.cgroup.root", "Root path to cgroup fs").Default(defCgroupRoot).String()
+	ProcRoot   = kingpin.Flag("path.proc.root", "Root path to proc fs").Default(defProcRoot).String()
+	metricLock = sync.RWMutex{}
 )
 
 const (

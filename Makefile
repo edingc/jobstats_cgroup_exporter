@@ -47,17 +47,6 @@ vet:
 clean:
 	rm -f $(BINARY) coverage.txt
 
-## docker-build: build Docker image
-docker-build:
-	docker build \
-	  --build-arg VERSION=$(VERSION) \
-	  --build-arg COMMIT=$(COMMIT) \
-	  --build-arg BUILD_DATE=$(BUILD_DATE) \
-	  --build-arg BRANCH=$(BRANCH) \
-	  -t $(IMAGE):$(VERSION) \
-	  -t $(IMAGE):latest \
-	  .
-
 ## help: show this help
 help:
 	@grep -E '^## ' Makefile | sed 's/## //'

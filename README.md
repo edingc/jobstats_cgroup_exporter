@@ -60,14 +60,9 @@ other users' cgroups and process information.
 
 ## Install
 
-Download the [latest release](https://github.com/edingc/jobstats_cgroup_exporter/releases)
+Download the [latest release](https://github.com/edingc/jobstats_cgroup_exporter/releases).
 
 ## Build from source
-
-The exporter follows the standard Go project layout: the entrypoint lives in
-`cmd/jobstats_cgroup_exporter` and the collector in `internal/collector`. It
-targets Linux only (it reads the cgroup v2 filesystem) and builds as a static,
-CGO-free binary.
 
 To produce the `jobstats_cgroup_exporter` binary:
 
@@ -81,8 +76,7 @@ Or build the command directly:
 go build ./cmd/jobstats_cgroup_exporter
 ```
 
-Other useful targets: `make test`, `make lint`, `make vet`, `make fmt`, and
-`make docker-build`. Run `make help` for the full list.
+Other useful targets: `make test`, `make lint`, `make vet` and `make fmt`. Run `make help` for the full list.
 
 ## Process metrics
 
