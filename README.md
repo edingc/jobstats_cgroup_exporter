@@ -11,6 +11,8 @@ By default, this exporter listens on port `9306`, and all metrics are exposed vi
 
 # Usage
 
+> In Slurm 26.05 or newer, the default `cgroup/v2` naming convention shifts from using the numeric Job ID to using a base62-encoded Slurm Local Unique Identifier (SLUID). For this exporter to function, you must restore the old numeric job ID naming scheme by setting `CgroupJobIdPaths=yes` in your Slurm `cgroup.conf` configuration file.
+
 The exporter scans `/system.slice/slurmstepd.scope` by default. This can be overridden by providing a comma-separated list of paths via the `--config.paths` flag.
 
 For example, if Slurm is compiled to support multiple `slurmd` instances and your cgroup paths are:
